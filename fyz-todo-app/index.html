@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>待办事项</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script charset="UTF-8" src="./index.js" async></script>
+  </head>
+
+  <body>
+    <header>
+      <div class="title-and-search">
+        <h1>我的待办事项</h1>
+        <input
+          placeholder="搜索您的待办事项"
+          id="input-search-todo-item"
+          onkeyup="searchTodos(event);"
+        />
+      </div>
+
+      <div class="add-todo-item">
+        <input
+          placeholder="添加待办事项"
+          onkeyup="handleAddTodoItem(event);"
+          id="input-add-todo-item"
+        />
+      </div>
+    </header>
+
+    <div class="show-todo-list">
+      <table>
+        <caption>
+          当前的待办事项
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">待办事项</th>
+            <th scope="col">操作</th>
+          </tr>
+        </thead>
+        <tbody id="todo-list-body"></tbody>
+      </table>
+    </div>
+  </body>
+</html>
