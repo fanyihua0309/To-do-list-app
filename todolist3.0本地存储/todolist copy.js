@@ -48,6 +48,10 @@ function handleSubmit() {
   const formData = new FormData(form);
   const todoItem = formData.get("todo-item");
 
+  // TODO: 如果用户在创建输入框中的内容是空的，就不处理（否则会出现一条空的待办事项）
+  if (!todoItem) {
+    return;
+  }
   renderTodoList(todoItem, false, 0, true);
   afterSubmit();
 }
