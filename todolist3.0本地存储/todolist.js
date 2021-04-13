@@ -68,7 +68,7 @@ function createButton(buttonName){
 //id为待办事项的id
 //newObj为true/false表示当前要进行渲染的待办事项为新增的还是从localStorage中读取的旧值
 function renderTodoList(todoItem, complete, id, newObj){
-    let table = document.querySelector("#todo-list");
+    let tbody = document.getElementById("todo-list-body");
     let tr = document.createElement("tr");
     let td = document.createElement("td");
     let span = document.createElement("span");
@@ -76,8 +76,9 @@ function renderTodoList(todoItem, complete, id, newObj){
     span.className = "todo-list-left";
     
     td.appendChild(span);
+    // td.style.width = "60%";
     tr.appendChild(td);
-    table.appendChild(tr);
+    tbody.appendChild(tr);
 
     if(newObj == true){
         obj.content = todoItem;
@@ -175,6 +176,7 @@ function renderTodoList(todoItem, complete, id, newObj){
         localStorage.setItem("待办事项", JSON.stringify(objArray));  
     }
     tdButton.appendChild(buttonComplete);
+    // tdButton.style.width = "40%";
 
     tr.appendChild(tdButton);
 }
@@ -182,12 +184,12 @@ function renderTodoList(todoItem, complete, id, newObj){
 //查询功能
 function handleSearch(){
     const searchText = document.getElementById("search-text").value;    //用户输入的待查询文本
-    const tabel = document.getElementById("todo-list");  
-    const tr = tabel.getElementsByTagName("tr");
+    const tbody = document.getElementById("todo-list-body");  
+    const tr = tbody.getElementsByTagName("tr");
     console.log(searchText);
     if(searchText === ""){      //若用户输入的内容为空,则恢复初始的待办事项表格
         for(let i = 0; i < tr.length; i++){
-        tr[i].style.display = "block";
+        tr[i].style.display = "table-row";
         }
     }
     else{
@@ -198,7 +200,7 @@ function handleSearch(){
                 tr[i].style.display = "none";
             }
             else{
-                tr[i].style.display = "block";  //注意这条语句
+                tr[i].style.display = "table-row";  //注意这条语句
             }
         }
     }
