@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>待办事项</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=divice-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="stylesheet" href="./todolist.css" />
-        <script charset="UTF-8" src="./todolist.js" async></script>
-    </head>
+  <head>
+    <title>待办事项</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=divice-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./todolist.css" />
+    <script charset="UTF-8" src="./todolist copy.js" async></script>
+  </head>
 
-    <body>
-        <div class="left-part">
-            <form onsubmit="return false;">
-                <label for="todo-item" id="my-todo-item"><h2>我的待办事项</h2></label><br />
-                <input name="todo-item" id="item" class="input-todo-item" onkeydown="enterToSubmit(event.keyCode);" placeholder="添加待办事项"/>
-            </form>
+  <body>
+    <div class="left-part">
+      <form onsubmit="return false;">
+        <label for="todo-item" id="my-todo-item"><h2>我的待办事项</h2></label
+        ><br />
+        <input
+          name="todo-item"
+          id="item"
+          class="input-todo-item"
+          onkeydown="enterToSubmit(event.keyCode);"
+          placeholder="添加待办事项"
+        />
+      </form>
 
-            <div class="search-div">
-                <input type="text" id="search-text" onkeydown="enterToSearch(event.keyCode);" placeholder="搜索待办事项">
-            </div>
-        </div>
+      <div class="search-div">
+        <input
+          type="text"
+          id="search-text"
+          onkeydown="enterToSearch(event.keyCode);"
+          placeholder="搜索待办事项"
+        />
+      </div>
+    </div>
 
-        <div>
-            <label><strong>待办事项列表</strong></label>
-            <div id="todo-list-div">
-                <table id="todo-list">   
-                    <thead>
-                        <tr>
-                            <th scope="col">待办事项</th>       
-                            <th scope="col">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="todo-list-body"></tbody>
-                </table>
-            </div>
-        </div>
-    </body>
+    <div>
+      <!-- TODO: 表格的标题，有专门的一个标签来放，叫 caption -->
+      <div id="todo-list-div">
+        <table id="todo-list">
+          <caption>
+            待办事项列表
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">待办事项</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody id="todo-list-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
 </html>

@@ -1,75 +1,75 @@
-html{
-    height: 100%;
-    width: 100%;
+html {
+  height: 100%;
+  width: 100%;
 }
 
-body{
-    height: 100%;
-    width: 100%;
-    line-height: 35px;
+body {
+  height: 100%;
+  width: 100%;
+  line-height: 35px;
 }
 
-.input-todo-item{
-    width: 600px;
-    height: 29px;
-    position: relative;
-    top: -30px;
+.input-todo-item {
+  width: 600px;
+  height: 29px;
+  position: relative;
+  top: -30px;
 }
 
-#search-text{
-    width: 340px;
-    height: 29px;
-    position: relative;
-    top: -124px;
-    left: 260px;
+#search-text {
+  width: 340px;
+  height: 29px;
+  position: relative;
+  top: -124px;
+  left: 260px;
 }
 
-#my-todo-item{
-    font-size: 20px;
+#my-todo-item {
+  font-size: 20px;
 }
 
-.show-list-div{
-    width: 500px;
-    height: 40px;
+.show-list-div {
+  width: 500px;
+  height: 40px;
 }
 
-#input-edit-text{
-    height: 25px;
-    width: 200px;
-    display: none;
+#input-edit-text {
+  height: 25px;
+  width: 200px;
+  display: none;
 }
 
-#todo-list-div{
-    width: 600px;
+#todo-list-div {
+  width: 600px;
 }
 
 table {
-    border-collapse: collapse;
-    border: 1px solid #aca6a6;
-    letter-spacing: 1px;
+  border-collapse: collapse;
+  border: 1px solid #aca6a6;
+  letter-spacing: 1px;
 
-    width: 100%;
+  width: 100%;
 }
 
 thead,
-tfoot{
-    background-color: #adc3ce;
+tfoot {
+  background-color: #adc3ce;
 }
 
-tbody{
-    background-color: #eef3f5;
+tbody {
+  background-color: #eef3f5;
 }
 
 th,
-td{
-    padding: 8px;
-    border: 1px solid #9c9a9a;
-    width: 62%;
+td {
+  padding: 8px;
+  border: 1px solid #9c9a9a;
+  width: 62%;
 }
 
-.button{
-    height: 25px;
-    width: 56px;
-    margin-left: 6px;
-    margin-right: 6px;
+.button {
+  height: 25px;
+  width: 56px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
