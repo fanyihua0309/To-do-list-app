@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=divice-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="./todolist.css" />
-    <script charset="UTF-8" src="./todolist copy.js" async></script>
+    <script charset="UTF-8" src="./todolist.js" async></script>
   </head>
 
   <body>
     <div class="left-part">
       <form onsubmit="return false;">
-        <label for="todo-item" id="my-todo-item"><h2>我的待办事项</h2></label
-        ><br />
+        <label for="todo-item" id="my-todo-item"><h2>我的待办事项</h2></label>
+        <br />
         <input
           name="todo-item"
           id="item"
@@ -34,9 +34,9 @@
     </div>
 
     <div>
-      <!-- TODO: 表格的标题，有专门的一个标签来放，叫 caption -->
       <div id="todo-list-div">
         <table id="todo-list">
+          <!-- 表格标题使用caption标签 -->
           <caption>
             待办事项列表
           </caption>

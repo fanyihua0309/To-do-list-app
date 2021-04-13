@@ -51,6 +51,12 @@ table {
   width: 100%;
 }
 
+caption{
+  text-align: left;
+  font-weight: bold;
+  font-size: 20px;
+}
+
 thead,
 tfoot {
   background-color: #adc3ce;
