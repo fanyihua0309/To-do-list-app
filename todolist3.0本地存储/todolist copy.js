@@ -1,9 +1,9 @@
 /**
- * TODO:1. 尽量不要使用全局变量
- * TODO:2. 变量名取有意义的名字，例如 objArray 其实可以改为：todoItems 或者 todoList
- * TODO:3. 养成使用严格等于的习惯，因为使用 == 可能造成某些意想不到的bug，等你以后对 JavaScript 语法比较熟练了再考虑使用 ==
- * TODO:4. JavaScript 是弱类型的编程语言（一个变量声明之后可以给它赋不同类型的值），
- * TODO:所以在写代码时要注意做 容错，例如：对于 curObj 不能直接取其 content 属性，而应该先判断 curObj 存在再取其 content 属性
+ * TODO: 1. 尽量不要使用全局变量
+ * TODO: 2. 变量名取有意义的名字，例如 objArray 其实可以改为：todoItems 或者 todoList
+ * TODO: 3. 养成使用严格等于的习惯，因为使用 == 可能造成某些意想不到的bug，等你以后对 JavaScript 语法比较熟练了再考虑使用 ==
+ * TODO: 4. JavaScript 是弱类型的编程语言（一个变量声明之后可以给它赋不同类型的值），所以在写代码时要注意做 容错，例如：对于 curObj 不能直接取其 content 属性，而应该先判断 curObj 存在再取其 content 属性
+ * TODO: 5. 可以学习一下如何写规划的函数注释，我在 renderTodoList 这个函数有给你写了一个函数注释的写法示例，可以参考一下
  */
 
 // window.onload表示在页面加载时即执行readData函数,从localStorage中读取已有的待办事项
