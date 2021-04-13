@@ -33,9 +33,9 @@ body {
   height: 40px;
 }
 
-#input-edit-text {
+.input-edit-text {
   height: 25px;
-  width: 200px;
+  width: 280px;
   display: none;
 }
 
@@ -74,8 +74,9 @@ td {
 }
 
 .button {
-  height: 25px;
+  height: 26px;
   width: 56px;
-  margin-left: 6px;
-  margin-right: 6px;
+  margin-left: 12px;
+  background-color: rgb(209, 233, 243);
+  border: 1.5px solid rgb(185, 212, 223);
 }

@@ -14,15 +14,14 @@ window.onload =  function readData(){
     curId = itemList.length;    //设置新增的第一个待办事项的id
     for(let i = 0; i < itemList.length; i++){
         const curItem = itemList[i];
-        // console.log(curId);
         // 做容错处理：先判断 curItem 是否存在，如果不存在程序都没必要往下进行
         if (!curItem) {
             console.error("没有取得当前待办事项元素，初始化失败！");
             return;
         }
-        // if(curItem.id !== -1){       //id值为-1表示被删除的待办事项,不处理
+        if(curItem.id !== -1){       //id值为-1表示被删除的待办事项,不处理
             renderTodoList(curItem.content, curItem.complete, curItem.id, false);
-        // }
+        }
     }
 }
 
@@ -91,7 +90,6 @@ function handleSubmit(){
         oneItem.complete = false;   //新增的待办事项默认为未完成
         oneItem.id = curId;
 
-        console.log(oneItem);
         let itemList = JSON.parse(localStorage.getItem("待办事项"));
         itemList.push(oneItem);
         localStorage.setItem("待办事项", JSON.stringify(itemList));
@@ -104,10 +102,6 @@ function handleSubmit(){
     }
     span.id = tr.id + "span";
 
-    // console.log(tr.id);
-    // console.log(span.id);
-    // console.log(todoItem);
-    // console.log(complete);
     createOperationTd(tr.id, span.id, todoItem, complete);
 }
 
@@ -124,42 +118,42 @@ function handleSubmit(){
     let tdButton = document.createElement("td");
 
     //1.编辑
-    // const buttonEdit = createButton("编辑");    //新增编辑按钮
-    // let inputEdit = document.createElement("input");    //新增标签input,用于编辑功能用户输入编辑的内容
-    // inputEdit.type = "text";
-    // inputEdit.id = trId + "input-edit-text";
-    // inputEdit.value = todoItem;
-    // inputEdit.style.display = "none";
-    // tr.cells[0].appendChild(inputEdit);
+    const buttonEdit = createButton("编辑");    //新增编辑按钮
+    let inputEdit = document.createElement("input");    //新增标签input,用于编辑功能用户输入编辑的内容
+    inputEdit.type = "text";
+    inputEdit.id = trId + "input-edit-text";
+    inputEdit.className = "input-edit-text";
+    inputEdit.value = todoItem;
+    inputEdit.style.display = "none";
+    tr.cells[0].appendChild(inputEdit);
 
-    // const buttonSubmit = createButton("提交");  //新增提交按钮
-    // buttonSubmit.id = trId + "button-submit-edit";
-    // buttonSubmit.style.display = "none";
-    // tr.cells[0].appendChild(buttonSubmit);
+    const buttonSubmit = createButton("提交");  //新增提交按钮
+    buttonSubmit.id = trId + "button-submit-edit";
+    buttonSubmit.style.display = "none";
+    tr.cells[0].appendChild(buttonSubmit);
 
-    // buttonEdit.onclick = handleEdit(trId, inputEdit.id, buttonSubmit.id);
-    // tdButton.appendChild(buttonEdit);
+    buttonEdit.onclick = () => handleEdit(trId, inputEdit.id, buttonSubmit.id);
+    tdButton.appendChild(buttonEdit);
 
     //2.删除
     const buttonDelete = createButton("删除");       //新增删除按钮
-    buttonDelete.onclick = handleDelete(trId);
+    buttonDelete.onclick = () => handleDelete(trId);
     tdButton.appendChild(buttonDelete);
 
     //3.完成/未完成
-    // const buttonComplete = createButton("完成");
-    // if(complete === false){
-    //     span.style.textDecoration = "none";
-    //     // buttonComplete = createButton("完成");    //新增完成按钮
-    // }
-    // else if(complete === true){
-    //     span.style.textDecoration = "line-through";
-    //     // buttonComplete = createButton("未完成");    //新增未完成按钮 
-    //     buttonComplete.innerHTML = "未完成";
-    // }
-    // buttonComplete.id = "button-complete" + trId;
-    // buttonComplete.onclick = handleComplete(trId, spanId, "button-submit-complete");
+    let buttonComplete;     //新增完成/未完成按钮
+    if(complete === false){
+        span.style.textDecoration = "none";
+        buttonComplete = createButton("完成");
+    }
+    else if(complete === true){
+        span.style.textDecoration = "line-through";
+        buttonComplete = createButton("完成");
+    }
+    buttonComplete.id = trId + "button-complete";
+    buttonComplete.onclick = () => handleComplete(trId, spanId, buttonComplete.id);
+    tdButton.appendChild(buttonComplete);
 
-    // console.log(buttonComplete);
     tr.appendChild(tdButton);
 }
 
@@ -191,9 +185,8 @@ function handleSubmitEdit(trId, inputEditId, buttonSubmitId){    //点击提交�
     inputEdit.style.display = "none";
     buttonSubmit.style.display = "none";
 
-    更改localStorage中相应的待办事项
-    let itemList = JSON.parse(localStorage.getItem("待办事项")); 
-    console.log(itemList);   
+    // 更改localStorage中相应的待办事项
+    let itemList = JSON.parse(localStorage.getItem("待办事项"));   
     let curItem = itemList[Number(trId)]; 
     if (!curItem) {
         console.error("没有取得当前待办事项元素，初始化失败！");
@@ -213,18 +206,13 @@ function handleEdit(trId, inputEditId, buttonSubmitId){
     const tr = document.getElementById(trId);
     const inputEdit = document.getElementById(inputEditId);
     const buttonSubmit = document.getElementById(buttonSubmitId);
-
-    console.log(inputEdit);
-    console.log(buttonSubmit);
-
     
-
-    inputEdit.style.display = "inline";       //点击编辑按钮后显示输入框
+    inputEdit.style.display = "inline";       //点击编辑按钮后显示输入框和提交按钮
+    inputEdit.focus();
     buttonSubmit.style.display = "inline";
     tr.cells[0].firstChild.style.display = "none";
     
-    console.log(inputEdit);
-    buttonSubmit.onclick = handleSubmitEdit(trId, inputEditId, buttonSubmitId);
+    buttonSubmit.onclick = () => handleSubmitEdit(trId, inputEditId, buttonSubmitId);
 }  
 
 
@@ -243,8 +231,6 @@ function handleDelete(trId){
         console.error("没有取得当前待办事项元素，初始化失败！");
         return;
     }
-    console.log("删除");
-    console.log(curItem);
     curItem.id = -1;     //id置为-1表示不再使用该条待办事项记录
     localStorage.setItem("待办事项", JSON.stringify(itemList));
 }
@@ -257,8 +243,6 @@ function handleDelete(trId){
 function handleComplete(trId, spanId, buttonCompleteId){   
     const buttonComplete = document.getElementById(buttonCompleteId);
     const span = document.getElementById(spanId);
-
-    console.log(buttonComplete);
 
     let itemList = JSON.parse(localStorage.getItem("待办事项"));    
     let curItem = itemList[Number(trId)];
@@ -288,7 +272,6 @@ function handleSearch(){
     const searchText = document.getElementById("search-text").value;    //用户输入的待查询文本
     const tbody = document.getElementById("todo-list-body");  
     const tr = tbody.getElementsByTagName("tr");
-    console.log(searchText);
     if(searchText === ""){      //若用户输入的内容为空,则恢复初始的待办事项表格
         for(let i = 0; i < tr.length; i++){
         tr[i].style.display = "table-row";
