@@ -1,10 +1,12 @@
 let curId = 0; //记录当前待办事项的id值
 
+// TODO: 全局的问题：你还是 var\let\const 混着用，let 和 const 混着用我可以理解，但是有些地方还是用 var，我就不太理解了
 /**
  * window.onload表示在页面加载时即执行readData函数
  * 从localStorage中读取已有的待办事项
  */
 window.onload = function readData() {
+  // TODO: 这里我做了简化，你可以对比一下和你原来写法的区别，我觉得你原来写的太啰嗦了
   let itemList = JSON.parse(localStorage.getItem("待办事项")) || [];
   curId = itemList.length; //设置新增的第一个待办事项的id
   for (let i = 0; i < itemList.length; i++) {
@@ -138,6 +140,7 @@ function createOperationTd(trId, spanId, todoItem, complete) {
   tdButton.appendChild(buttonDelete);
 
   //3.完成/未完成
+  // TODO: 这里我也做了简化，你原来那样写也可以，你可以借此机会练习一下使用三元表达式（两种写法没有优劣之分，只是让你多看一种写法而已）
   span.style.textDecoration = complete ? "line-through" : "none";
   let buttonComplete = createButton(complete ? "未完成" : "完成");
   buttonComplete.id = trId + "button-complete";
