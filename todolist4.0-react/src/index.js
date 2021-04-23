@@ -1,7 +1,15 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-16 15:02:51
+ * @LastEditTime: 2021-04-23 11:11:25
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \To-do-list-app\todolist4.0-react\src\index.js
+ */
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App1";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
