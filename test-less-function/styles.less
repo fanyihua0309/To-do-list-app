@@ -1,0 +1,54 @@
+@height: 25px;
+@width: @height * 10;
+@margin: 15px;
+@base-color: #eef3f5;
+@border-color: #9c9a9a;
+@button-color: rgb(209, 233, 243);
+
+#item{
+    height: @height;
+    width: @width;
+    margin-bottom: @margin;
+}
+
+#search-text{
+    #item();
+}
+
+.input-edit-text{
+    #item();
+    display: none;
+}
+
+.th{
+    padding: 8px;
+    border: 1px solid @border-color;
+    width: 62%;
+}
+
+table{
+    border-collapse: collapse;
+    border: 1px solid @border-color;
+    letter-spacing: 1px;
+    width: 500px;
+    caption{
+        font-size: 20px;
+        font-weight: bold;
+        text-align: left;
+        margin-top: @margin;
+    }
+    thead{
+        height: 35px;
+        background-color: spin(@base-color, 10);
+    }
+    tbody{
+        background-color: @base-color;
+        td{
+            .th();
+        }
+        button{
+            background-color: @button-color;
+            margin-left: @margin - 2;
+        }
+    }
+}

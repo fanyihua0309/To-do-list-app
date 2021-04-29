@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import MyInput from './MyInput.jsx'
 import TodoList from "./TodoList.jsx";
 
+import { Button } from 'antd';
 import './App.less'
 
 
@@ -27,6 +28,19 @@ class TodoItem{
 
 function App() {
   const [todoItems, settodoItems] = useState([]);
+
+  /**
+   * 新增一条待办事项
+   * @param {*} e onClick传递的事件参数
+   * @param {string} content 待办事项的内容
+   */
+  const addTodoItem = (e, content) => {
+    const newItem = new TodoItem(content);
+    settodoItems((preItem) => {
+      return [...preItem, newItem];
+    })
+    e.target.value = "";
+  }
 
   /**
    * 当用户点击编辑按钮时
@@ -70,74 +84,14 @@ function App() {
   }
 
   /**
-   * 请求数据存储到 todoItems 对象数组中
+   * 当用户按下回车键查询待办事项时
+   * @param {*} e onClick传递的事件参数
    */
-  const fetchAllTodoItems = () => {
-    fetch("http://42.193.140.83/todos/")
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      console.log(res.data);
-      res.data.map((curItem) => {
-        const newItem = new TodoItem(curItem.content);
-        newItem.id = curItem._id;
-        newItem.complete = curItem.complete;
-        newItem.edit = curItem.edit;
-        newItem.show = curItem.match;
-        settodoItems((preItem) => {
-        return [...preItem, newItem];
-        })
-        return curItem;
-    })
-    })
-  }
-  
-  /**
-   * 在页面加载时发请求获取数据
-   */
-  useEffect(() => {
-    fetchAllTodoItems();
-  }, [])
-
-  /**
-   * 用户新增一条待办事项时，向服务器发 post 请求
-   * @param {string} value 待办事项的内容
-   */
-  const fetchAddTodoItem = (value) => {
-    console.log(value);
-    fetch("http://42.193.140.83/todos/add", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-      body: JSON.stringify({ content: value }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const {
-          meta: { code, error },
-        } = res;
-        if (code !== 0) {
-          alert(error || "新增失败！");
-        } 
-        else {
-          fetchAllTodoItems();
-        }
-      });
-  }
-
-  /**
-   * 当用户在搜索框键入 content ，请求数据修改对象的 show 属性
-   * @param {string} content 待办事项的内容
-   */
-  const fetchSearchTodoItems = (content) => {
-    // fetchAllTodoItems();  // 请求所有数据，进行前端搜索
+  const handleSearch = (e, content) => {
     let copyTodoItems = Array.from(todoItems);
     if(content !== ""){
       copyTodoItems = copyTodoItems.map((curItem) => {
         curItem.show = (curItem.content.indexOf(content) !== -1);
-        // console.log(curItem); 
         return curItem;
       })
     }
@@ -147,15 +101,74 @@ function App() {
         return curItem;
       })
     }
-    console.log(copyTodoItems); 
     settodoItems(copyTodoItems);
   }
 
+  const [res, setres] = useState([]);
+
+  //https://www.kuaidi100.com/query?type=yuantong&postid=YT5409924808522&temp=0.006291141281837387&phone=
+
+  window.onload = () => {
+    console.log("window.onload");
+    fetch("https://api.apiopen.top/getJoke?page=1&count=20&type=video")
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      setres(res.result)})  
+  }
+
+  const [num, setnum] = useState(1);  //count
+  const [url, seturl] = useState("https://api.apiopen.top/getJoke?page=1&count=2&type=video");
+
+  const loadData = () => {
+    console.log("url", url);
+    fetch(url)
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      console.log(res);
+      console.log(res.result);
+      setres(res.result);
+    })
+    }
+  
+  const setUrlCount = (url) => {
+    // const newUrl = "https://api.apiopen.top/getJoke?page=1&count=" + String(num) + "&type=video";
+    const newUrl = `https://api.apiopen.top/getJoke?page=1&count=${num}&type=video`;
+    seturl(newUrl);
+  }
+
+  const loadNumData = () => {
+    console.log(num);
+    setUrlCount(); 
+    // loadData();
+  }
+
+  // state改变，react重新渲染页面。
+  useEffect(() => { 
+    loadData();
+  }, [url])
+
+
   return (
     <div>
-      <MyInput placeholder="添加待办事项" onClickEnter={fetchAddTodoItem}/>
-      <br />
-      <MyInput placeholder="搜索待办事项" onClickEnter={fetchSearchTodoItems} />
+      <Button type="primary">Button</Button>
+
+      <input type="text" onChange={(e) => setnum(e.target.value)}/>
+      <button onClick={loadNumData}>提交</button>
+      <div>
+        {res.map((cur) => {
+          return (
+            <p key={Math.random()}>{cur.text}</p>
+          )
+        })}
+      </div>
+
+      <MyInput placeholder="添加待办事项" onClickEnter={(e, content) => addTodoItem(e, content)}/>
+
+      <MyInput placeholder="搜索待办事项" onClickEnter={(e, content) => handleSearch(e, content)} />
 
       <TodoList 
         todoItems={todoItems}

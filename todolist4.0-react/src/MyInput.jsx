@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 
-import "./App.css"
+import { Input } from 'antd';
+import "./App.less"
 
 const MyInput = ({placeholder, onClickEnter}) => {
   const [content, setcontent] = useState("");
@@ -19,15 +20,14 @@ const MyInput = ({placeholder, onClickEnter}) => {
    */
    const enterToSubmit = (e) => {
     if(e.code === "Enter"){
-      onClickEnter(e, content);  // 将 e, content 抛出给父组件
-      // 在搜索时并不希望清空输入框，所以将这一步操作交由父组件完成
-      // e.target.value = '';    // 清空输入框
+      onClickEnter(content);  // 将 content 抛出给父组件
+      e.target.value = '';    // 清空输入框
       e.target.focus();          // 定位光标
     }
   }
 
   return (
-    <input className="myInput" placeholder={placeholder} onKeyDown={enterToSubmit} onChange={storeContent}/>
+    <Input className="myInput" placeholder={placeholder} onKeyDown={enterToSubmit} onChange={storeContent}/>
     );
 }
 

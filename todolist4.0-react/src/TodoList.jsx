@@ -1,5 +1,9 @@
 import React, {useState} from 'react'
 
+import { Button, Input } from 'antd';
+import { Table, Space } from 'antd';
+import './App.less'
+
 const TodoList = ({todoItems, onClickEditBtn, onClickEditSubmitBtn, onClickDeleteBtn, onClickCompleteBtn}) => {
 
   const [editContent, seteditContent] = useState("");
@@ -37,72 +41,54 @@ const TodoList = ({todoItems, onClickEditBtn, onClickEditSubmitBtn, onClickDelet
   const onClickEditBtn1 = (e, id, content) => {
     onClickEditBtn(id);
     seteditContent(content);
-    
-    // 问题：无法定位光标？
-    // setTimeout(()=>{
-    //   e.target.focus();
-    // })
   }
- 
-   /**
-   * 渲染当前待办事项
-   * @param {object} curItem 当前待办事项
-   * @returns 
-   */
-     const renderCurTodoItem = (curItem) => {
-      if(curItem.show){   
+
+  const columns = [
+    {
+      title: '待办事项',
+      dataIndex: 'content',
+      key: 'content',
+      render: (text, record) => {
         return (
-          // 通过循环遍历list生成的元素，要给每一行唯一的key，否则会有warning
-          <tr key={curItem.id}>
-            <td>
-              {
-                curItem.edit ? 
-                  (
-                    // 也可以用空标签<></>包裹起来，jsx只能返回一个元素
-                    <div>
-                      <input type="text" value={editContent} onChange={storeEditContent}/>
-                      <button onClick={() => handleEditSubmit(curItem.id)}>提交</button>
-                    </div>
-                  )
-                  :
-                  (<span style={{textDecoration:
-                    (curItem.complete ? "line-through" : "none")  
-                  }}>
-                    {curItem.content}
-                  </span>)
-              }
-            </td>
-            <td>
-              <button onClick={(e) => onClickEditBtn1(e, curItem.id, curItem.content)}>编辑</button>
-              <button onClick={() => onClickDeleteBtn(curItem.id)}>删除</button>
-              <button onClick={() => onClickCompleteBtn(curItem.id)}>
-                {curItem.complete ? "未完成" : "完成"}
-              </button>
-            </td>
-          </tr>
+          record.edit ? 
+          (<div>
+            <Input type="text" allowClear value={editContent} onChange={storeEditContent}/>
+            <Button type="primary" onClick={() => handleEditSubmit(record.id)}>提交</Button>
+          </div>)
+          :
+            (<span style={{textDecoration: (record.complete ? "line-through" : "none")}}>
+              {text}
+            </span>)
         )
       }
-      
-    }
-
+    },
+    {
+      title: '操作',
+      key: 'operation',
+      render: (text, record) => {
+          return (
+            <Space size="middle">
+              <Button type="primary" onClick={(e) => onClickEditBtn1(e, record.id, record.content)}>编辑</Button>
+              <Button type="primary" onClick={() => onClickDeleteBtn(record.id)}>删除</Button>
+              <Button type="primary" onClick={() => onClickCompleteBtn(record.id)}>
+                {record.complete ? "未完成" : "完成"}
+              </Button>
+            </Space>
+          )
+      },
+    },
+  ];
+    
 
   return (
-    <table>
-        <caption>
-          待办事项列表
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">待办事项</th>
-            <th scope="col">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            todoItems.map(renderCurTodoItem)
-          }
-        </tbody>
-      </table>
+    <div>
+      <h2 id="table-caption">待办事项列表</h2>  
+      <Table 
+        columns={columns} 
+        dataSource={todoItems.filter((curItem) => {return curItem.show === true;})} 
+        id="table"
+      />
+    </div>
   )
 }
 
