@@ -1,23 +1,31 @@
 import React from "react"
-
-
+import { Tabs } from 'antd';
+import { Divider } from 'antd';
 import NormalLoginForm from "./NormalLoginForm.jsx"
 import "./App.less"
 
-
 const LoginPage = () => {
 
+  const { TabPane } = Tabs;
 
-
-
+  function callback(key) {
+    console.log(key);
+  }
 
   return (
     <div>
-      {/* react 中图片需放在 public 文件夹中 */}
-      <img src="./login-picture.png" alt="登录图片" height="50%" width="50%" />
+      <h1 className="title">待办事项管理系统</h1>
       <div id="login-form-div">
-        <h2 id="login-form-caption">账号登录</h2>
-        <NormalLoginForm />
+        <Divider><span style={{fontWeight: "bold", fontSize: "18px", color: "grey"}}>欢 迎 登 录</span></Divider>
+        <Tabs onChange={callback} type="card" size="large" id="login-tabs">
+          <TabPane tab="账号登录" key="1">
+              <NormalLoginForm />
+          </TabPane>
+          <TabPane tab="微信登录" key="2">
+            Content of Tab Pane 2
+          </TabPane>
+        </Tabs>
+
       </div>
     </div>
   )

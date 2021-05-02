@@ -5,34 +5,17 @@ import {
   Route,
   // Link
 } from "react-router-dom";
-
+import { Divider } from 'antd';
 import TodoListPage from "./TodoListPage.jsx"
 import LoginPage from "./LoginPage.jsx"
+import RegistrationForm from "./RegistrationForm"
 import "./App.less"
 
 function App() {
 
-  const Home = () => {
-    return (
-      <h2>Home</h2>
-    );
-  }
-
   return (
     <Router>
       <div>
-        {/* <nav>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/login">登录</Link>
-          </li>
-          <li>
-            <Link to="/todolist">待办事项列表</Link>
-          </li>
-        </nav> */}
-
         <Switch>
           <Route path="/login">
             <LoginPage />
@@ -40,9 +23,16 @@ function App() {
           <Route path="/todolist">
             <TodoListPage />
           </Route>
-          {/* /的匹配应该放在最后，否则其他都会匹配成此项 */}
+          <Route path="/register">
+            <div id="register-form-div">
+              <Divider>
+                <span style={{fontWeight: "bold", fontSize: "18px", color: "grey"}}>注 册 账 户</span>
+              </Divider>
+              <RegistrationForm/>
+            </div>
+          </Route>
           <Route path="/">  
-            <Home />
+            <LoginPage />
           </Route>
         </Switch>
       </div>
