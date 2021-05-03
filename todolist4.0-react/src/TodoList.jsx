@@ -103,7 +103,7 @@ const TodoList = ({todoItems, onClickEditBtn, onClickEditSubmitBtn, onClickDelet
       <Table 
         columns={columns} 
         dataSource={todoItems.filter((curItem) => {return curItem.show === true;})} 
-        pagination={{position: ["topLeft"], pageSize: 5, showQuickJumper: true}}
+        pagination={{position: ["topLeft"], pageSize: 4, showQuickJumper: true}}
         id="table"
       />
     </div>

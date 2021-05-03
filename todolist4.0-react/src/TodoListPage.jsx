@@ -5,6 +5,10 @@ import MySearch from './MySearch.jsx'
 import TodoList from './TodoList.jsx'
 import './App.less'
 import axios from "axios"
+import { Layout } from 'antd';
+
+
+const { Header, Footer, Content } = Layout;
 
 const axiosInst = axios.create({
   baseURL: "http://42.193.140.83:3000",
@@ -188,24 +192,36 @@ const TodoListPage = () => {
   }
 
   return (
-    <div>
-      <h1 className="big-title">待办事项管理系统</h1>
-      <div>
-        <MyInput onClickEnter={fetchAddTodoItem}/>
-        <MySearch onClickEnter={fetchSearchTodoItems} />
-      </div>
+    <Layout>
+      <Header style={{backgroundColor: "lightblue"}}>
+        <h1 className="big-title" style={{fontSize: "30px"}}>待办事项管理系统</h1>
+      </Header>
+      <Content>
+        <div>
+          <MyInput onClickEnter={fetchAddTodoItem}/>
+          <MySearch onClickEnter={fetchSearchTodoItems} />
+        </div>
 
-      <div>
-        <h2 className="sub-title">待办事项列表</h2>
-        <TodoList 
-          todoItems={todoItems}
-          onClickEditBtn={(id) => handleEdit(id)}
-          onClickEditSubmitBtn={(id, editContent) => fetchEditTodoItem(id, editContent)}
-          onClickDeleteBtn={(id) => fetchDeleteTodoItem(id)}
-          onClickCompleteBtn={(id) => fetchCompleteTodoItem(id)} 
-        />
-      </div>
-    </div>
+        <div>
+          <h2 className="sub-title">待办事项列表</h2>
+          <TodoList 
+            todoItems={todoItems}
+            onClickEditBtn={(id) => handleEdit(id)}
+            onClickEditSubmitBtn={(id, editContent) => fetchEditTodoItem(id, editContent)}
+            onClickDeleteBtn={(id) => fetchDeleteTodoItem(id)}
+            onClickCompleteBtn={(id) => fetchCompleteTodoItem(id)} 
+          />
+        </div>
+      </Content>
+      <Footer style={{backgroundColor: "lightblue"}}>
+        <footer id="footer">
+          <div class="copyright" style={{textAlign: "center"}}>
+            &copy; Copyright <em>Fan Yihua</em>. All Rights Reserved.
+             Contact me through <em>nuaaccstfyh@163.com</em>
+          </div>
+        </footer>
+      </Footer>
+    </Layout>
   );
 }
 

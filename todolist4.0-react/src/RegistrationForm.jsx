@@ -129,6 +129,10 @@ const RegistrationForm = () => {
             required: true,
             message: '请输入手机号码!',
           },
+          {
+            pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, 
+            message: '请输入正确的手机号码!'
+          }
         ]}
       >
         <Input
@@ -145,7 +149,7 @@ const RegistrationForm = () => {
         rules={[
           {
             type: 'email',
-            message: '邮箱地址不合法!',
+            message: '请输入正确的邮箱地址!',
           },
           {
             required: true,
@@ -163,6 +167,10 @@ const RegistrationForm = () => {
           {
             required: true,
             message: '请输入密码!',
+          },
+          {
+            min: 6,
+            message: '密码不能少于6位!'
           },
         ]}
         hasFeedback
