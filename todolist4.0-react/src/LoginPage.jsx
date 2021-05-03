@@ -3,6 +3,7 @@ import { Tabs } from 'antd';
 import { Divider } from 'antd';
 import NormalLoginForm from "./NormalLoginForm.jsx"
 import "./App.less"
+import { Switch } from "react-router";
 
 const LoginPage = () => {
 
@@ -22,10 +23,9 @@ const LoginPage = () => {
               <NormalLoginForm />
           </TabPane>
           <TabPane tab="微信登录" key="2">
-            Content of Tab Pane 2
+            暂未开放使用。敬请期待！
           </TabPane>
         </Tabs>
-
       </div>
     </div>
   )

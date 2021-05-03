@@ -16,7 +16,7 @@ axiosInst.interceptors.response.use(
       data
     } = response.data;
     if(code !== 0){
-      alert(errors);
+      alert(errors[0]);
       return Promise.reject(errors);
     }
     return data;

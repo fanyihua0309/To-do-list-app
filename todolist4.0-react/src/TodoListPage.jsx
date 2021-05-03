@@ -18,7 +18,7 @@ axiosInst.interceptors.response.use(
       data,
     } = response.data;
     if (code !== 0) {
-      alert(errors);
+      alert(errors[0]);
       return Promise.reject(errors);
     }
     return data;
@@ -64,6 +64,22 @@ const TodoListPage = () => {
     })
     settodoItems(copyTodoItems);
   }
+
+  /**
+   * 当用户输入编辑内容完毕，点击提交按钮时，更新服务器对应待办事项的 content
+   * @param {number} id 待办事项的 id
+   */
+     const fetchEditTodoItem = (id, editContent) => {
+      axiosInst
+        .patch("/todos", {
+          id,
+          content: editContent,
+        })
+        .then(() => {
+          settodoItems([]);     // 先将本地的 todoItems 置为空
+          fetchAllTodoItems();  // 请求获取所有的 todoItems，存储到对象数组中
+        })
+    }
 
   /**
    * 当用户点击删除按钮时，向服务器发 post 请求删除对应的待办事项
@@ -184,7 +200,7 @@ const TodoListPage = () => {
         <TodoList 
           todoItems={todoItems}
           onClickEditBtn={(id) => handleEdit(id)}
-          onClickEditSubmitBtn={(todoItems) => settodoItems(todoItems)}
+          onClickEditSubmitBtn={(id, editContent) => fetchEditTodoItem(id, editContent)}
           onClickDeleteBtn={(id) => fetchDeleteTodoItem(id)}
           onClickCompleteBtn={(id) => fetchCompleteTodoItem(id)} 
         />

@@ -3,6 +3,29 @@ import React, {useState} from 'react'
 import { Button, Input } from 'antd';
 import { Table, Space } from 'antd';
 import './App.less'
+import axios from "axios"
+
+const axiosInst = axios.create({
+  baseURL: "http://42.193.140.83:3000",
+  timeout: 10000,
+});
+
+axiosInst.interceptors.response.use(
+  function (response) {
+    const {
+      meta: { code, errors },
+      data,
+    } = response.data;
+    if (code !== 0) {
+      alert(errors[0]);
+      return Promise.reject(errors);
+    }
+    return data;
+  },
+  function (errors) {
+    return Promise.reject(errors);
+  }
+);
 
 const TodoList = ({todoItems, onClickEditBtn, onClickEditSubmitBtn, onClickDeleteBtn, onClickCompleteBtn}) => {
 
@@ -21,16 +44,9 @@ const TodoList = ({todoItems, onClickEditBtn, onClickEditSubmitBtn, onClickDelet
    * @param {number} id 当前待办事项的id
    */
    const handleEditSubmit = (id) => {
-    let copyTodoItems = Array.from(todoItems);
-    copyTodoItems = copyTodoItems.map((curItem) => {
-      if(curItem.id === id){
-        curItem.content = editContent;
-        curItem.edit = false;
-      }
-      return curItem;
-    })
-    onClickEditSubmitBtn(copyTodoItems);
+    onClickEditSubmitBtn(id, editContent);  // 将待办事项的 id, 编辑后的内容抛给父组件
   }
+
 
   /**
    * 将 id, content 抛出给父组件，并设置 editContent 的值
