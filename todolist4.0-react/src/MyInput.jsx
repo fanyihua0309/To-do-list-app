@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
-
 import { Input } from 'antd';
 import "./App.less"
 
-const MyInput = ({placeholder, onClickEnter}) => {
+const MyInput = ({onClickEnter}) => {
   const [content, setcontent] = useState("");
 
   /**
@@ -26,14 +25,18 @@ const MyInput = ({placeholder, onClickEnter}) => {
     }
   }
 
+  
+
   return (
     <Input 
       className="myInput" 
-      placeholder={placeholder} 
+      size="large"
+      allowClear
+      placeholder="按回车添加待办事项"
       onKeyDown={enterToSubmit} 
       onChange={storeContent} 
     />
-    );
+  );
 }
 
 export default MyInput;

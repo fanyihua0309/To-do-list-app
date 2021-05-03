@@ -17,8 +17,8 @@ const NormalLoginForm = () => {
         data,
       } = response.data;
       if (code !== 0) {
-        console.log("errors", errors);
-        alert(errors);
+        console.log("errors", errors[0]);
+        alert(errors[0]);
         return Promise.reject(errors);
       }
       return data;

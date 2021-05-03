@@ -10,15 +10,13 @@ html{
 body{
   background-image: url("background.jpg");
   background-size: 100% 100%;
-  background-repeat:no-repeat; 
+  // background-repeat:no-repeat; 
 }
 
 .myInput{
   width: 400px;
   height: 38px;
-  margin-top: 25px;
-  display: flex;
-  justify-content: center;
+  margin: 25px;
 }
 
 #todolist-page{
@@ -31,34 +29,36 @@ body{
 }
 
 #table{
-  width: 800px;
-  background-color: rgb(199, 226, 235);
-  position: relative;
-  left: 480px;
+  background-color: rgb(181, 219, 209);
   
   tr{
     height: 30px;
     width: 100%;
     td{
-      width: 60%;
+      width: 65%;
+      button{
+        margin-left: 20px;
+      }
     }
-  }
-
-  .ant-pagination{
-    // position: relative;
-    // right: 200px;
   }
 }
 
-.title{
-  display: inline;
-  font-size: 30px;
+.big-title{
+  color: transparent;
+  background-color : black;
+  text-shadow : rgba(255,255,255,0.5) 0 5px 6px, rgba(255,255,255,0.2) 1px 3px 3px;
+  -webkit-background-clip : text;
+}
+
+.sub-title{
+  color: transparent;
+  -webkit-text-stroke: 1px black;
+  letter-spacing: 0.04em;
   font-weight: bold;
-  // margin-bottom: 50px;
 }
 
 #login-form-div{
-  height: 400px;
+  height: 420px;
   width: 450px;
   background-color: whitesmoke;
   box-shadow: 5px 5px 10px #909090;

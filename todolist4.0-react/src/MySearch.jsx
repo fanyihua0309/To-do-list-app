@@ -4,7 +4,7 @@ import { Input } from 'antd';
 import "./App.less"
 const { Search } = Input;
 
-const MySearch = ({placeholder, onClickEnter}) => {
+const MySearch = ({onClickEnter}) => {
   const [content, setcontent] = useState("");
 
   /**

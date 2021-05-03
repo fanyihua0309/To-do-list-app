@@ -173,17 +173,22 @@ const TodoListPage = () => {
 
   return (
     <div>
-      <MyInput placeholder="添加待办事项" onClickEnter={fetchAddTodoItem}/>
-      {/* <MyInput placeholder="搜索待办事项" onClickEnter={fetchSearchTodoItems} /> */}
-      <MySearch placeholder="搜索待办事项" onClickEnter={fetchSearchTodoItems} />
+      <h1 className="big-title">待办事项管理系统</h1>
+      <div>
+        <MyInput onClickEnter={fetchAddTodoItem}/>
+        <MySearch onClickEnter={fetchSearchTodoItems} />
+      </div>
 
-      <TodoList 
-        todoItems={todoItems}
-        onClickEditBtn={(id) => handleEdit(id)}
-        onClickEditSubmitBtn={(todoItems) => settodoItems(todoItems)}
-        onClickDeleteBtn={(id) => fetchDeleteTodoItem(id)}
-        onClickCompleteBtn={(id) => fetchCompleteTodoItem(id)} 
-      />
+      <div>
+        <h2 className="sub-title">待办事项列表</h2>
+        <TodoList 
+          todoItems={todoItems}
+          onClickEditBtn={(id) => handleEdit(id)}
+          onClickEditSubmitBtn={(todoItems) => settodoItems(todoItems)}
+          onClickDeleteBtn={(id) => fetchDeleteTodoItem(id)}
+          onClickCompleteBtn={(id) => fetchCompleteTodoItem(id)} 
+        />
+      </div>
     </div>
   );
 }

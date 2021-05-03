@@ -14,7 +14,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <h1 className="title">待办事项管理系统</h1>
+      <h1 className="big-title">待办事项管理系统</h1>
       <div id="login-form-div">
         <Divider><span style={{fontWeight: "bold", fontSize: "18px", color: "grey"}}>欢 迎 登 录</span></Divider>
         <Tabs onChange={callback} type="card" size="large" id="login-tabs">
