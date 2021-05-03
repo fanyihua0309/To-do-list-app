@@ -1,8 +1,32 @@
 import React, { useState, useEffect } from "react";
 
 import MyInput from './MyInput.jsx'
+import MySearch from './MySearch.jsx'
 import TodoList from './TodoList.jsx'
 import './App.less'
+import axios from "axios"
+
+const axiosInst = axios.create({
+  baseURL: "http://42.193.140.83:3000",
+  timeout: 10000,
+});
+
+axiosInst.interceptors.response.use(
+  function (response) {
+    const {
+      meta: { code, errors },
+      data,
+    } = response.data;
+    if (code !== 0) {
+      alert(errors);
+      return Promise.reject(errors);
+    }
+    return data;
+  },
+  function (errors) {
+    return Promise.reject(errors);
+  }
+);
 
 
 // 定义待办事项的类
@@ -21,7 +45,6 @@ class TodoItem{
     this.show = true;
   }
 }
-
 
 
 const TodoListPage = () => {
@@ -47,41 +70,13 @@ const TodoListPage = () => {
    * @param {number} id 待删除待办事项的 id
    */
   const fetchDeleteTodoItem = (id) => {
-    fetch(`http://42.193.140.83:3000/todos/${id}`, {
-      method: "delete",})
+    axiosInst
+      .delete(`todos/${id}`)
       .then((res) => {
-        return res.json();
+        settodoItems([]);     // 先将本地的 todoItems 置为空
+        fetchAllTodoItems();  // 请求获取所有的 todoItems，存储到对象数组中
       })
-      .then((res) => {
-        const {
-          meta: { code, error },
-        } = res;
-        if (code !== 0) {
-          alert(error || "删除失败！");
-        } 
-        else {
-          settodoItems([]);     // 先将本地的 todoItems 置为空
-          fetchAllTodoItems();  // 请求获取所有的 todoItems，存储到对象数组中
-          console.log("todoItems", todoItems);
-        }
-      });
   }
-
-  /**
-   * 当用户点击完成/未完成按钮时
-   * @param {number} id 当前待办事项的id
-   */
-  // const handleComplete = (id) => {
-  //   let copyTodoItems = Array.from(todoItems);
-  //   copyTodoItems = copyTodoItems.map((curItem) => {
-  //     if(curItem.id === id){
-  //       curItem.complete = !curItem.complete;
-  //     }
-  //     return curItem;   
-  //   })
-  //   settodoItems(copyTodoItems);
-  // }
-
 
   /**
    * 当用户点击完成/未完成按钮时, 发请求更新服务器端的数据
@@ -95,50 +90,41 @@ const TodoListPage = () => {
         content = curItem.content;
       }
     })
-    fetch("http://42.193.140.83:3000/todos", {
-      method: "patch",
-      body: JSON.stringify({
-        id: id,
-        content: content,
+    console.log("id", id);
+    console.log("content", content);
+    console.log("complete", !original_complete);
+    axiosInst
+      .patch("/todos", {
+        id,
+        content,
         complete: !original_complete,
-      }),
-    })
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      const { meta: { code, error },} = res;
-      if(code !== 0){
-        alert(error || "更改事项完成状态失败!");
-      }
-      else{
+      })
+      .then(() => {
         settodoItems([]);
         fetchAllTodoItems();
-      }
-    })
+      });
   }
 
   /**
    * 请求所有数据存储到 todoItems 对象数组中
    */
   const fetchAllTodoItems = () => {
-    fetch("http://42.193.140.83:3000/todos")
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      console.log("res", res);
-      res.data.map((curItem) => {
-        const newItem = new TodoItem(curItem.content);
-        newItem.id = curItem._id;
-        newItem.complete = curItem.complete;
-        newItem.edit = curItem.edit;
-        newItem.show = curItem.match;
-        settodoItems((preItem) => {
-          return [...preItem, newItem];
-        })
-        return curItem;
-    })
+    axiosInst
+      .get("/todos")
+      .then((res) => {
+        console.log("res", res);
+        settodoItems([]);
+        res.map((curItem) => {
+          const newItem = new TodoItem(curItem.content);
+          newItem.id = curItem._id;
+          newItem.complete = curItem.complete;
+          newItem.edit = curItem.edit;
+          newItem.show = curItem.match;
+          settodoItems((preItem) => {
+            return [...preItem, newItem];
+          })
+          return curItem;
+      })
     })
   }
   
@@ -154,33 +140,21 @@ const TodoListPage = () => {
    * @param {string} value 待办事项的内容
    */
   const fetchAddTodoItem = (value) => {
-    fetch("http://42.193.140.83:3000/todos", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-      body: JSON.stringify({ content: value }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const { meta: { code, error },} = res;
-        if (code !== 0) {
-          alert(error || "新增失败！");
-        } 
-        else {
-          settodoItems([]);
-          fetchAllTodoItems();
-        }
-      });
+    axiosInst
+      .post("/todos", {
+        content: value
+      })
+      .then(() => {
+        settodoItems([]);
+        fetchAllTodoItems();
+      })
   }
 
   /**
-   * 当用户在搜索框键入 content ，请求数据修改对象的 show 属性
+   * 当用户在搜索框键入 content ，修改对象的 show 属性
    * @param {string} content 待办事项的内容
    */
   const fetchSearchTodoItems = (content) => {
-    settodoItems([]);
-    fetchAllTodoItems();  // 请求所有数据，进行前端搜索
     let copyTodoItems = Array.from(todoItems);
     if(content !== ""){
       copyTodoItems = copyTodoItems.map((curItem) => {
@@ -194,22 +168,20 @@ const TodoListPage = () => {
         return curItem;
       })
     }
-    console.log(copyTodoItems); 
     settodoItems(copyTodoItems);
   }
 
   return (
     <div>
       <MyInput placeholder="添加待办事项" onClickEnter={fetchAddTodoItem}/>
-      <br />
-      <MyInput placeholder="搜索待办事项" onClickEnter={fetchSearchTodoItems} />
+      {/* <MyInput placeholder="搜索待办事项" onClickEnter={fetchSearchTodoItems} /> */}
+      <MySearch placeholder="搜索待办事项" onClickEnter={fetchSearchTodoItems} />
 
       <TodoList 
         todoItems={todoItems}
         onClickEditBtn={(id) => handleEdit(id)}
         onClickEditSubmitBtn={(todoItems) => settodoItems(todoItems)}
         onClickDeleteBtn={(id) => fetchDeleteTodoItem(id)}
-        // onClickDeleteBtn={(id) => handleDelete(id)}
         onClickCompleteBtn={(id) => fetchCompleteTodoItem(id)} 
       />
     </div>

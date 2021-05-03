@@ -48,6 +48,7 @@ const TodoList = ({todoItems, onClickEditBtn, onClickEditSubmitBtn, onClickDelet
       title: '待办事项',
       dataIndex: 'content',
       key: 'content',
+      // width: '500px',
       render: (text, record) => {
         return (
           record.edit ? 
@@ -65,6 +66,7 @@ const TodoList = ({todoItems, onClickEditBtn, onClickEditSubmitBtn, onClickDelet
     {
       title: '操作',
       key: 'operation',
+      // width: '200px',
       render: (text, record) => {
           return (
             <Space size="middle">
@@ -78,14 +80,16 @@ const TodoList = ({todoItems, onClickEditBtn, onClickEditSubmitBtn, onClickDelet
       },
     },
   ];
-    
+
 
   return (
     <div>
-      <h2 id="table-caption">待办事项列表</h2>  
+      {/* <h2 id="table-caption">待办事项列表</h2>   */}
       <Table 
         columns={columns} 
         dataSource={todoItems.filter((curItem) => {return curItem.show === true;})} 
+        pagination={{pageSize: 6, position: "topRight"}}
+        // title="待办事项列表"
         id="table"
       />
     </div>

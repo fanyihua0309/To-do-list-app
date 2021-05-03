@@ -1,19 +1,45 @@
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
-import {
-  BrowserRouter as Router,
-  // Switch,
-  // Route,
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
+import axios from "axios"
 
 const NormalLoginForm = () => {
+  const axiosInst = axios.create({
+      baseURL: "http://42.193.140.83:3000",
+      timeout: 10000,
+  });
+
+  axiosInst.interceptors.response.use(
+    function (response) {
+      const {
+        meta: { code, errors },
+        data,
+      } = response.data;
+      if (code !== 0) {
+        console.log("errors", errors);
+        alert(errors);
+        return Promise.reject(errors);
+      }
+      return data;
+    },
+    function (errors) {
+      return Promise.reject(errors);
+    }
+  );
+
   let history = useHistory();
 
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-    history.push("/todolist");
+    axiosInst
+      .post("/users/signin", {
+        "name": values.username,
+        "password": values.password
+      })
+      .then(() => {
+        history.push("/todolist");
+      })
+    // console.log('Received values of form: ', values);
   };
 
   return (
@@ -56,17 +82,8 @@ const NormalLoginForm = () => {
           <Checkbox>记住我</Checkbox>
         </Form.Item>
 
-        {/* <a className="login-form-forgot" href="http://localhost:3000/register">
-          还没有账号？现在注册
-        </a> */}
-        <Router>
-          <Link to="/register">还没有账号？现在注册</Link>
-          {/* <Switch>
-            <Route path="/register">
-              <RegistrationForm />
-            </Route>
-          </Switch> */}
-        </Router>
+        <Link to="/register">还没有账号？现在注册</Link>
+
       </Form.Item>
 
       <Form.Item>

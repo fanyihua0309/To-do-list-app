@@ -14,9 +14,15 @@ body{
 }
 
 .myInput{
-  width: 600px;
+  width: 400px;
   height: 38px;
   margin-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+#todolist-page{
+  background-image: url("login.jpg");
 }
 
 #table-caption{
@@ -25,12 +31,22 @@ body{
 }
 
 #table{
+  width: 800px;
+  background-color: rgb(199, 226, 235);
+  position: relative;
+  left: 480px;
+  
   tr{
-    height: 35px;
+    height: 30px;
     width: 100%;
     td{
       width: 60%;
     }
+  }
+
+  .ant-pagination{
+    // position: relative;
+    // right: 200px;
   }
 }
 

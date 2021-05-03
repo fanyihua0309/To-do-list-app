@@ -1,12 +1,31 @@
 import React from 'react';
 import { Form, Input, Select, Button } from 'antd';
 import { useHistory } from "react-router-dom";
-import {
-  BrowserRouter as Router,
-  // Switch,
-  // Route,
-  Link
-} from "react-router-dom";
+import axios from "axios"
+
+
+const axiosInst = axios.create({
+  baseURL: "http://42.193.140.83:3000",
+  timeout: 10000,
+});
+
+axiosInst.interceptors.response.use(
+  function (response) {
+    const {
+      meta : { code, errors },
+      data
+    } = response.data;
+    if(code !== 0){
+      alert(errors);
+      return Promise.reject(errors);
+    }
+    return data;
+  },
+  function (errors) {
+    return Promise.reject(errors);
+  }
+)
+
 
 const { Option } = Select;
 
@@ -44,8 +63,21 @@ const tailFormItemLayout = {
 const RegistrationForm = () => {
   const [form] = Form.useForm();
 
+  let history = useHistory();
+
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+    axiosInst
+      .post("/users/signup", {
+        name: values.nickname,
+        email: values.email,
+        mobile: values.phone,
+        password: values.password
+      })
+      .then(() => {
+        history.push("/register/result");
+      })
+    
+    // console.log('Received values of form: ', values);
   };
 
   const prefixSelector = (
@@ -60,12 +92,6 @@ const RegistrationForm = () => {
       </Select>
     </Form.Item>
   );
-
-  let history = useHistory();
-  const handleClick = () => {
-    alert("注册成功！返回登录");
-    history.replace("/login");
-  }
 
   return (
     <Form
@@ -97,7 +123,7 @@ const RegistrationForm = () => {
 
       <Form.Item
         name="phone"
-        label="手机号码"
+        label="手机"
         rules={[
           {
             required: true,
@@ -111,6 +137,23 @@ const RegistrationForm = () => {
             width: '100%',
           }}
         />
+      </Form.Item>
+
+      <Form.Item
+        name="email"
+        label="邮箱"
+        rules={[
+          {
+            type: 'email',
+            message: '邮箱地址不合法!',
+          },
+          {
+            required: true,
+            message: '请输入邮箱地址!',
+          },
+        ]}
+      >
+        <Input />
       </Form.Item>
  
       <Form.Item
@@ -152,7 +195,7 @@ const RegistrationForm = () => {
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit" style={{width: "270px"}} onClick={handleClick}>
+        <Button type="primary" htmlType="submit" style={{width: "270px"}}>
           注&nbsp;&nbsp;&nbsp;&nbsp;册
         </Button>
       </Form.Item>

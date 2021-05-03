@@ -27,7 +27,12 @@ const MyInput = ({placeholder, onClickEnter}) => {
   }
 
   return (
-    <Input className="myInput" placeholder={placeholder} onKeyDown={enterToSubmit} onChange={storeContent}/>
+    <Input 
+      className="myInput" 
+      placeholder={placeholder} 
+      onKeyDown={enterToSubmit} 
+      onChange={storeContent} 
+    />
     );
 }
 
