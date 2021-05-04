@@ -19,7 +19,7 @@ function App() {
       <div>
         <Switch>
           <Route path="/login">
-            <SignPage formLable="欢 迎 登 录" render={<NormalLoginForm />} />
+            <SignPage formLable="欢 迎 登 录" render={<NormalLoginForm />} className="sign-page"/>
           </Route>
 
           <Route path="/todolist">

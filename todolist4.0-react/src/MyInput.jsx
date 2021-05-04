@@ -17,7 +17,7 @@ const MyInput = ({placeholder, isSearch, onClickEnter}) => {
 
 
   return (
-    (isSearch === "1") ?
+    (isSearch === "true") ?
     (
       <Search
       className="myInput" 

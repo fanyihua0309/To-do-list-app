@@ -195,10 +195,10 @@ const TodoListPage = () => {
       <Header style={{backgroundColor: "lightblue"}}>
         <h1 className="big-title" style={{fontSize: "30px"}}>待办事项管理系统</h1>
       </Header>
-      <Content>
+      <Content style={{height: "calc(100vh - 64px)"}}>
         <div>
-          <MyInput placeholder="按回车新建待办事项" isSearch="0" onClickEnter={fetchAddTodoItem}/>
-          <MyInput placeholder="按回车搜索待办事项" isSearch="1" onClickEnter={fetchSearchTodoItems}/>
+          <MyInput placeholder="按回车新建待办事项" isSearch="false" onClickEnter={fetchAddTodoItem}/>
+          <MyInput placeholder="按回车搜索待办事项" isSearch="true" onClickEnter={fetchSearchTodoItems}/>
         </div>
 
         <div>
