@@ -7,6 +7,8 @@ import {
 import SignPage from "./SignPage.jsx"
 import RegisterResult from "./RegisterResult"
 import TodoListPage from "./TodoListPage.jsx"
+import NormalLoginForm from "./NormalLoginForm.jsx"
+import RegistrationForm from "./RegistrationForm.jsx"
 import "./App.less"
 
 
@@ -17,7 +19,7 @@ function App() {
       <div>
         <Switch>
           <Route path="/login">
-            <SignPage type="login"/>
+            <SignPage formLable="欢 迎 登 录" render={<NormalLoginForm />} />
           </Route>
 
           <Route path="/todolist">
@@ -25,15 +27,15 @@ function App() {
           </Route>
 
           <Route path="/register/result">
-            <RegisterResult />
+            <SignPage formLable="注 册 结 果" render={<RegisterResult />} />
           </Route>
 
           <Route path="/register">
-            <SignPage type="register"/>
+            <SignPage formLable="注 册 账 户" render={<RegistrationForm />} />
           </Route>
 
           <Route path="/">  
-            <SignPage type="login"/>
+            <SignPage formLable="欢 迎 登 录" render={<NormalLoginForm />} />
           </Route>
         </Switch>
       </div>

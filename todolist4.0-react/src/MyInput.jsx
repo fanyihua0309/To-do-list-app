@@ -2,7 +2,9 @@ import React, {useState} from 'react'
 import { Input } from 'antd';
 import "./App.less"
 
-const MyInput = ({onClickEnter}) => {
+const { Search } = Input;
+
+const MyInput = ({placeholder, isSearch, onClickEnter}) => {
   const [content, setcontent] = useState("");
 
   /**
@@ -13,29 +15,29 @@ const MyInput = ({onClickEnter}) => {
     setcontent(e.target.value);
   }
 
-  /**
-   * 用户按下回车可实现提交
-   * @param {number} e onClick传递的事件参数
-   */
-   const enterToSubmit = (e) => {
-    if(e.code === "Enter"){
-      onClickEnter(content);  // 将 content 抛出给父组件
-      e.target.value = '';    // 清空输入框
-      e.target.focus();          // 定位光标
-    }
-  }
-
-  
 
   return (
-    <Input 
+    (isSearch === "1") ?
+    (
+      <Search
       className="myInput" 
       size="large"
       allowClear
-      placeholder="按回车添加待办事项"
-      onKeyDown={enterToSubmit} 
+      enterButton
+      placeholder={placeholder}
       onChange={storeContent} 
+      onPressEnter={() => onClickEnter(content)}
     />
+    )
+    :
+    (<Input 
+      className="myInput" 
+      size="large"
+      allowClear
+      placeholder={placeholder}
+      onChange={storeContent} 
+      onPressEnter={() => onClickEnter(content)}
+    />)
   );
 }
 

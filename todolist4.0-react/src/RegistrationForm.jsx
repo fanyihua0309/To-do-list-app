@@ -99,6 +99,7 @@ const RegistrationForm = () => {
       form={form}
       name="register"
       onFinish={onFinish}
+      className="register-form"
       initialValues={{
         residence: ['zhejiang', 'hangzhou', 'xihu'],
         prefix: '86',
@@ -203,7 +204,7 @@ const RegistrationForm = () => {
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit" style={{width: "270px"}}>
+        <Button type="primary" htmlType="submit">
           注&nbsp;&nbsp;&nbsp;&nbsp;册
         </Button>
       </Form.Item>

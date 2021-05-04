@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import MyInput from './MyInput.jsx'
-import MySearch from './MySearch.jsx'
 import TodoList from './TodoList.jsx'
 import './App.less'
 import axios from "axios"
@@ -198,8 +197,8 @@ const TodoListPage = () => {
       </Header>
       <Content>
         <div>
-          <MyInput onClickEnter={fetchAddTodoItem}/>
-          <MySearch onClickEnter={fetchSearchTodoItems} />
+          <MyInput placeholder="按回车新建待办事项" isSearch="0" onClickEnter={fetchAddTodoItem}/>
+          <MyInput placeholder="按回车搜索待办事项" isSearch="1" onClickEnter={fetchSearchTodoItems}/>
         </div>
 
         <div>
