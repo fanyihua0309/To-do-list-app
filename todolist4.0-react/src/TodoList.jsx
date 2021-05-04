@@ -64,7 +64,6 @@ const TodoList = ({todoItems, onClickEditBtn, onClickEditSubmitBtn, onClickDelet
       title: '待办事项',
       dataIndex: 'content',
       key: 'content',
-      // width: '500px',
       render: (text, record) => {
         return (
           record.edit ? 
@@ -82,7 +81,6 @@ const TodoList = ({todoItems, onClickEditBtn, onClickEditSubmitBtn, onClickDelet
     {
       title: '操作',
       key: 'operation',
-      // width: '200px',
       render: (text, record) => {
           return (
             <Space size="middle">

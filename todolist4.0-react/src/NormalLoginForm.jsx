@@ -24,6 +24,7 @@ const NormalLoginForm = () => {
       return data;
     },
     function (errors) {
+      console.log(errors);
       return Promise.reject(errors);
     }
   );
